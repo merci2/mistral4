@@ -362,8 +362,15 @@ export class RAGChatService {
       } else if (file.type === 'application/json') {
         const json = JSON.parse(await file.text());
         content = JSON.stringify(json, null, 2);
+      } else if (file.type === 'application/pdf') {
+        // Basic PDF handling - in production use a proper PDF parser
+        content = await this.extractPDFContent(file);
+      } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || 
+                 file.type === 'application/msword') {
+        // Basic Word document handling
+        content = await this.extractWordContent(file);
       } else {
-        throw new Error(`Unsupported file type: ${file.type}`);
+        throw new Error(`Unsupported file type: ${file.type}. Supported formats: .txt, .json, .pdf, .doc, .docx`);
       }
 
       return await this.knowledgeBase.addDocument(
@@ -377,6 +384,79 @@ export class RAGChatService {
     } catch (error) {
       console.error('File processing error:', error);
       throw error;
+    }
+  }
+
+  // Basic PDF content extraction
+  private async extractPDFContent(file: File): Promise<string> {
+    try {
+      // This is a basic implementation
+      // In production, you should use a library like pdf-parse or PDF.js
+      const arrayBuffer = await file.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // Simple text extraction attempt (very basic)
+      let text = '';
+      for (let i = 0; i < uint8Array.length; i++) {
+        const char = String.fromCharCode(uint8Array[i]);
+        if (char.match(/[a-zA-Z0-9\s.,!?;:()\-'"]/)) {
+          text += char;
+        }
+      }
+      
+      // Clean up the extracted text
+      text = text.replace(/\s+/g, ' ').trim();
+      
+      if (text.length < 50) {
+        return `PDF file: ${file.name}\n\nNote: This is a complex PDF file. Basic text extraction returned limited content. For better results, consider converting the PDF to text format first.\n\nExtracted text: ${text}`;
+      }
+      
+      return text;
+    } catch (error) {
+      console.error('PDF extraction error:', error);
+      return `PDF file: ${file.name}\n\nError: Could not extract text from this PDF file. Please try converting it to a text file first.`;
+    }
+  }
+
+  // Basic Word document content extraction
+  private async extractWordContent(file: File): Promise<string> {
+    try {
+      // This is a very basic implementation
+      // In production, you should use a library like mammoth.js
+      const arrayBuffer = await file.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // For .docx files, try to find text content
+      if (file.name.endsWith('.docx')) {
+        // Very basic approach - look for readable text
+        let text = '';
+
+        
+        for (let i = 0; i < uint8Array.length - 3; i++) {
+          // Look for text patterns in XML structure
+          const char = String.fromCharCode(uint8Array[i]);
+          if (char.match(/[a-zA-Z0-9\s.,!?;:()\-'"]/)) {
+            text += char;
+          } else if (char === '<') {
+            text += ' ';
+          }
+        }
+        
+        // Clean up the extracted text
+        text = text.replace(/\s+/g, ' ').trim();
+        
+        if (text.length < 50) {
+          return `Word document: ${file.name}\n\nNote: This Word document contains complex formatting. Basic text extraction returned limited content. For better results, consider saving the document as a plain text file.\n\nExtracted text: ${text}`;
+        }
+        
+        return text;
+      } else {
+        // For older .doc files
+        return `Word document: ${file.name}\n\nNote: Legacy .doc files require specialized parsing. Please save the document as .docx or .txt format for better text extraction.`;
+      }
+    } catch (error) {
+      console.error('Word extraction error:', error);
+      return `Word document: ${file.name}\n\nError: Could not extract text from this Word document. Please try saving it as a text file first.`;
     }
   }
 }
