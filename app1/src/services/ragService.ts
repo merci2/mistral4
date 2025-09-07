@@ -207,7 +207,7 @@ export class KnowledgeBaseService {
       const data = localStorage.getItem('mistral_knowledge_base');
       if (data) {
         const parsed = JSON.parse(data);
-        this.documents = parsed.map((doc: any) => ({
+        this.documents = parsed.map((doc: Document) => ({
           ...doc,
           metadata: {
             ...doc.metadata,
@@ -270,21 +270,21 @@ export class RAGChatService {
 - Wenn du dir bei etwas unsicher bist, sage das ehrlich`;
 
       // 4. Prepare conversation messages
-      const messages = [
-        { role: 'system' as const, content: systemPrompt }
+      const messages: Array<{role: 'system' | 'user' | 'assistant', content: string}> = [
+        { role: 'system', content: systemPrompt }
       ];
 
       // Add recent conversation history (last 6 messages to stay within token limits)
       const recentHistory = conversationHistory.slice(-6);
       recentHistory.forEach(msg => {
         messages.push({
-          role: msg.role as 'user' | 'assistant',
+          role: msg.role,
           content: msg.content
         });
       });
 
       // Add current user query
-      messages.push({ role: 'user' as const, content: userQuery });
+      messages.push({ role: 'user', content: userQuery });
 
       // 5. Get Mistral response
       const response = await this.mistralClient.chat.complete({

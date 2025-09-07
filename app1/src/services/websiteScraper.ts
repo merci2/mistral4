@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-class WebsiteScraperService {
+export class WebsiteScraperService {
   async scrapeWebsite(url: string): Promise<{
     title: string;
     content: string;
@@ -53,3 +53,6 @@ class WebsiteScraperService {
       .trim();
   }
 }
+
+// Export a default instance for convenience
+export const websiteScraperService = new WebsiteScraperService();
