@@ -294,8 +294,19 @@ export class RAGChatService {
         temperature: 0.7,
       });
 
-      const assistantResponse = response.choices?.[0]?.message?.content || 
-        'Entschuldigung, ich konnte keine Antwort generieren.';
+      // FIX: Proper type handling for Mistral API response
+      let assistantResponse: string;
+      
+      if (response.choices && response.choices.length > 0) {
+        const choice = response.choices[0];
+        if (choice.message && typeof choice.message.content === 'string') {
+          assistantResponse = choice.message.content;
+        } else {
+          assistantResponse = 'Entschuldigung, ich konnte keine gültige Antwort generieren.';
+        }
+      } else {
+        assistantResponse = 'Entschuldigung, ich konnte keine Antwort generieren.';
+      }
 
       return {
         response: assistantResponse,

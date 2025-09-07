@@ -1,6 +1,7 @@
 // src/App.tsx
 import { useState, useEffect, useRef } from 'react';
-import { RAGChatService, Document, ChatMessage as RAGChatMessage } from './services/ragService';
+import { RAGChatService } from './services/ragService';
+import type { Document } from './services/ragService';
 import './global.css';
 
 // Type definitions
