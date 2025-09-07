@@ -1,0 +1,89 @@
+/* src/global.css */
+
+/* Basis-Reset für konsistentes Box-Modell */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Globale Body-Styles und Schriftarten */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4; /* Ein heller Hintergrund */
+  color: #333; /* Dunklerer Text für bessere Lesbarkeit */
+  line-height: 1.6; /* Verbesserte Zeilenhöhe */
+}
+
+/* Styles für den Hauptinhaltscontainer der App */
+.app-container {
+  max-width: 900px;
+  margin: 50px auto; /* Zentriert den Container horizontal */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+  text-align: center;
+}
+
+h1 {
+  color: #007bff; /* Eine Akzentfarbe für Überschriften */
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+/* Styles für den Chatbot-Widget-Container */
+/* Diesen Stil wenden Sie auf die umhüllende Komponente Ihres Chatbots an */
+.chatbot-widget {
+  position: fixed; /* Fixiert die Position relativ zum Viewport */
+  bottom: 20px; /* 20px Abstand vom unteren Rand */
+  right: 20px; /* 20px Abstand vom rechten Rand */
+  width: 350px; /* Standardbreite für Desktops */
+  height: 500px; /* Standardhöhe */
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Deutlicherer Schatten */
+  z-index: 1000; /* Stellt sicher, dass der Chatbot über anderen Inhalten liegt */
+  display: flex; /* Für Flexbox-Layout innerhalb des Chatbots */
+  flex-direction: column; /* Elemente im Chatbot untereinander */
+  overflow: hidden; /* Verhindert, dass Inhalte über den Rand ragen */
+  transition: all 0.3s ease-in-out; /* Sanfte Übergänge für responsive Anpassungen */
+}
+
+/* Responsives Design für mobile Geräte */
+@media (max-width: 768px) {
+  .app-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .chatbot-widget {
+    width: 90%; /* Auf mobilen Geräten 90% der Breite */
+    height: 70vh; /* 70% der Viewport-Höhe */
+    max-height: 600px; /* Maximale Höhe, um zu grossen Chatbot zu vermeiden */
+    right: 5%; /* Zentriert den Chatbot horizontal */
+    left: 5%;
+    transform: translateX(0); /* Keine Verschiebung, da right/left gesetzt sind */
+    bottom: 15px; /* Etwas kleinerer Abstand unten */
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .chatbot-widget {
+    width: 95%; /* Noch breiter auf sehr kleinen Geräten */
+    height: 80vh; /* Noch höher */
+    right: 2.5%;
+    left: 2.5%;
+    bottom: 10px;
+    border-radius: 8px; /* Kleinere Ecken auf kleinen Bildschirmen */
+  }
+}
