@@ -210,95 +210,35 @@ function App() {
       {connectionStatus === 'connected' && isChatVisible && (
         <div className="chatbot-widget">
           {/* Chat Header */}
-          <div style={{
-            background: '#007bff',
-            color: 'white',
-            padding: '15px',
-            borderRadius: '12px 12px 0 0',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <h3 style={{ margin: 0, fontSize: '16px' }}>AI Assistant</h3>
+          <div className="chat-header">
+            <h3>AI Assistant</h3>
             <button
               onClick={() => setIsChatVisible(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                fontSize: '18px',
-                cursor: 'pointer',
-                padding: '0',
-                width: '24px',
-                height: '24px'
-              }}
+              className="chat-close-btn"
             >
               ×
             </button>
           </div>
 
           {/* Messages Container */}
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px'
-          }}>
+          <div className="messages-container">
             {messages.map((message) => (
               <div
                 key={message.id}
-                style={{
-                  alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
-                  maxWidth: '80%',
-                  background: message.role === 'user' ? '#007bff' : '#f1f1f1',
-                  color: message.role === 'user' ? 'white' : '#333',
-                  padding: '10px 12px',
-                  borderRadius: message.role === 'user' ? '15px 15px 5px 15px' : '15px 15px 15px 5px',
-                  wordBreak: 'break-word'
-                }}
+                className={`message ${message.role === 'user' ? 'user-message' : 'assistant-message'}`}
               >
-                <div>{message.content}</div>
-                <div style={{
-                  fontSize: '11px',
-                  opacity: 0.7,
-                  marginTop: '4px'
-                }}>
+                <div className="message-content">{message.content}</div>
+                <div className="message-time">
                   {formatTime(message.timestamp)}
                 </div>
               </div>
             ))}
             {isLoading && (
-              <div style={{
-                alignSelf: 'flex-start',
-                background: '#f1f1f1',
-                padding: '10px 12px',
-                borderRadius: '15px 15px 15px 5px',
-                maxWidth: '80%'
-              }}>
-                <div style={{ display: 'flex', gap: '4px' }}>
-                  <div style={{ 
-                    width: '8px', 
-                    height: '8px', 
-                    background: '#666', 
-                    borderRadius: '50%',
-                    animation: 'pulse 1.4s ease-in-out infinite'
-                  }} />
-                  <div style={{ 
-                    width: '8px', 
-                    height: '8px', 
-                    background: '#666', 
-                    borderRadius: '50%',
-                    animation: 'pulse 1.4s ease-in-out infinite 0.2s'
-                  }} />
-                  <div style={{ 
-                    width: '8px', 
-                    height: '8px', 
-                    background: '#666', 
-                    borderRadius: '50%',
-                    animation: 'pulse 1.4s ease-in-out infinite 0.4s'
-                  }} />
+              <div className="message assistant-message">
+                <div className="typing-indicator">
+                  <div className="typing-dot"></div>
+                  <div className="typing-dot"></div>
+                  <div className="typing-dot"></div>
                 </div>
               </div>
             )}
@@ -306,66 +246,26 @@ function App() {
           </div>
 
           {/* Input Container */}
-          <div style={{
-            padding: '15px',
-            borderTop: '1px solid #eee',
-            display: 'flex',
-            gap: '10px'
-          }}>
+          <div className="chat-input-container">
             <textarea
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type your message..."
               disabled={isLoading}
-              style={{
-                flex: 1,
-                border: '1px solid #ddd',
-                borderRadius: '20px',
-                padding: '10px 15px',
-                resize: 'none',
-                minHeight: '20px',
-                maxHeight: '80px',
-                fontSize: '14px',
-                outline: 'none'
-              }}
+              className="chat-input"
               rows={1}
             />
             <button
               onClick={sendMessage}
               disabled={!inputMessage.trim() || isLoading}
-              style={{
-                background: inputMessage.trim() && !isLoading ? '#007bff' : '#ccc',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50%',
-                width: '40px',
-                height: '40px',
-                cursor: inputMessage.trim() && !isLoading ? 'pointer' : 'default',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '16px'
-              }}
+              className={`chat-send-btn ${inputMessage.trim() && !isLoading ? 'active' : 'disabled'}`}
             >
               ↑
             </button>
           </div>
         </div>
       )}
-
-      <style>
-        {`
-          @keyframes pulse {
-            0%, 80%, 100% {
-              opacity: 0.3;
-            }
-            40% {
-              opacity: 1;
-            }
-          }
-        `}
-      </style>
     </div>
   );
 }
