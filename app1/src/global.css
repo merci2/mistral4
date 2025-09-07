@@ -67,21 +67,242 @@ p {
   text-decoration: underline;
 }
 
-/* Chat Toggle Button */
-.chat-toggle-btn {
+/* Controls Section */
+.controls-section {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Knowledge Management Styles */
+.knowledge-management {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.knowledge-management h3 {
+  color: #007bff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.knowledge-management h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Add Content Section */
+.add-content-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.website-input-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.website-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.website-input:focus {
+  border-color: #007bff;
+}
+
+.website-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.add-content-btn {
+  padding: 8px 16px;
   background: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
   font-size: 14px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
 
-.chat-toggle-btn:hover {
+.add-content-btn:hover:not(:disabled) {
   background: #0056b3;
+}
+
+.add-content-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.file-input {
+  display: block;
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  width: 100%;
+}
+
+.file-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.file-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+/* Documents Section */
+.documents-section {
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.documents-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.document-item {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: #fafafa;
+  transition: background-color 0.2s ease;
+}
+
+.document-item:hover {
+  background: #f0f0f0;
+}
+
+.document-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.document-header h5 {
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.remove-doc-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.remove-doc-btn:hover {
+  background: #c82333;
+}
+
+.document-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.source-tag {
+  background: #007bff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.date-tag {
+  color: #666;
+  font-size: 11px;
+}
+
+.url-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 11px;
+}
+
+.url-link:hover {
+  text-decoration: underline;
+}
+
+.document-preview {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+  background: white;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #e9e9e9;
+}
+
+/* Message Sources */
+.message-sources {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #666;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 6px;
+}
+
+.user-message .message-sources {
+  border-top-color: rgba(255, 255, 255, 0.3);
+}
+
+.assistant-message .message-sources {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.source-reference {
+  font-style: italic;
 }
 
 /* Styles für den Chatbot-Widget-Container */
